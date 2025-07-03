@@ -7,7 +7,7 @@
         <form action="/listings" method="POST">
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
-                <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title" class="form-control">
+                <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title" class="form-control" required />
             </div>
            
             <div class="mb-3">
@@ -23,7 +23,7 @@
             <div class="row mb-3">
                 <div class="col-4">
                     <label for="price" class="form-label">Price</label>
-                    <input type="number" name="listing[price]" placeholder="1200" id="price" class="form-control">
+                    <input type="number" name="listing[price]" placeholder="1200" id="price" class="form-control" required />
                 </div>
                 
                 <div class="col-8">

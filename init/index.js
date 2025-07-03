@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-dotenv.config(); // Make sure you load .env variables at the very beginning
+dotenv.config();
 
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
@@ -15,7 +15,7 @@ async function main() {
     console.log("Connected to DB successfully");
   } catch (err) {
     console.error("Error connecting to DB:", err);
-    process.exit(1); // Exit the app if DB connection fails
+    process.exit(1);
   }
 }
 
