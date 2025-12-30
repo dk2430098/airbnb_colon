@@ -1,4 +1,13 @@
 # 🏨 Wanderlust (Airbnb Clone)
+<p align="center">
+  <a href="https://airbnb-colon-ccm2.vercel.app" target="_blank">
+    <img src="https://img.shields.io/badge/Live%20Demo-Visit%20App-brightgreen?style=for-the-badge&logo=vercel&logoColor=white" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/dk2430098/airbnb_colon" target="_blank">
+    <img src="https://img.shields.io/badge/GitHub%20Repo-View%20Code-black?style=for-the-badge&logo=github&logoColor=white" />
+  </a>
+</p>
 
 A full-stack web application replicating the core features of Airbnb, built with the MERN stack (MongoDB, Express, React-like EJS, Node.js). This project features a modern, responsive UI using Tailwind CSS and offers a complete booking and property management experience.
 
