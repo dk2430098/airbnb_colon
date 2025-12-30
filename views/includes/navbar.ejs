@@ -45,12 +45,57 @@
               <% } %>
       </div>
 
-      <!-- Mobile Menu Button (Simple implementation) -->
+      <!-- Mobile Menu Button -->
       <div class="md:hidden flex items-center">
-        <button class="text-gray-700 hover:text-primary focus:outline-none">
+        <button id="mobile-menu-btn" class="text-gray-700 hover:text-primary focus:outline-none">
           <i class="fa-solid fa-bars text-xl"></i>
         </button>
       </div>
     </div>
   </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-gray-200">
+    <div class="px-4 pt-2 pb-4 space-y-3">
+      <!-- Search -->
+      <form action="/listings" method="GET" class="relative">
+        <input type="text" name="search" placeholder="Search..."
+          class="w-full pl-4 pr-10 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-primary outline-none text-sm">
+        <button class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <a href="/" class="block text-gray-700 hover:text-primary font-medium">Explore</a>
+      <a href="/listings/new" class="block text-gray-700 hover:text-primary font-medium">Add</a>
+
+      <% if(!currUser) { %>
+        <div class="border-t border-gray-100 pt-3 flex flex-col space-y-2">
+          <a href="/signup" class="block text-gray-900 font-bold hover:text-primary">Sign up</a>
+          <a href="/login" class="block text-primary font-semibold hover:text-primary-hover">Log in</a>
+        </div>
+        <% } %>
+
+          <% if(currUser) { %>
+            <div class="border-t border-gray-100 pt-3">
+              <a href="/users/dashboard" class="flex items-center space-x-2 text-gray-700 hover:text-primary py-2">
+                <i class="fa-regular fa-heart"></i>
+                <span>Dashboard & Wishlist</span>
+              </a>
+              <a href="/logout" class="block text-red-500 font-medium py-2">Log out</a>
+            </div>
+            <% } %>
+    </div>
+  </div>
+
+  <script>
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+
+    if (btn && menu) {
+      btn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+  </script>
 </nav>
