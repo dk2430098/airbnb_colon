@@ -1,0 +1,187 @@
+<% layout('/layouts/boilerplate') %>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Header Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900">Hello, <%= user.username %>! 👋</h1>
+            <p class="text-gray-500 mt-2">Welcome to your dashboard.</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-primary/10 text-primary">
+                        <i class="fa-solid fa-house text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">My Listings</p>
+                        <p class="text-2xl font-bold text-gray-900">
+                            <%= myListings.length %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-red-50 text-red-500">
+                        <i class="fa-solid fa-heart text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Wishlist</p>
+                        <p class="text-2xl font-bold text-gray-900">
+                            <%= user.wishlist.length %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+                <div class="flex items-center">
+                    <div class="p-3 rounded-full bg-blue-50 text-blue-500">
+                        <i class="fa-solid fa-calendar-check text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-sm font-medium text-gray-500">Member Since</p>
+                        <p class="text-lg font-bold text-gray-900">Oct 2023</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Tabs -->
+        <div class="mb-8 border-b border-gray-200">
+            <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="dashboardTabs"
+                data-tabs-toggle="#dashboardTabContent" role="tablist">
+                <li class="mr-2" role="presentation">
+                    <button class="inline-block p-4 border-b-2 rounded-t-lg text-primary border-primary"
+                        id="listings-tab" data-tabs-target="#listings" type="button" role="tab" aria-controls="listings"
+                        aria-selected="true">My Listings</button>
+                </li>
+                <li class="mr-2" role="presentation">
+                    <button
+                        class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                        id="wishlist-tab" data-tabs-target="#wishlist" type="button" role="tab" aria-controls="wishlist"
+                        aria-selected="false">My Wishlist</button>
+                </li>
+            </ul>
+        </div>
+
+        <div id="dashboardTabContent">
+            <!-- My Listings Tab -->
+            <div class="" id="listings" role="tabpanel" aria-labelledby="listings-tab">
+                <% if(myListings.length===0) { %>
+                    <div class="text-center py-12">
+                        <div class="text-gray-400 mb-4"><i class="fa-regular fa-folder-open text-4xl"></i></div>
+                        <h3 class="text-lg font-medium text-gray-900">No listings yet</h3>
+                        <p class="text-gray-500 mb-6">Time to dust off your spare room!</p>
+                        <a href="/listings/new"
+                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-primary-hover">
+                            Create Listing
+                        </a>
+                    </div>
+                    <% } else { %>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <% for(listing of myListings) { %>
+                                <div
+                                    class="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-transparent hover:border-gray-200">
+                                    <div class="relative aspect-square overflow-hidden">
+                                        <img src="<%= listing.image %>"
+                                            class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                            alt="<%= listing.title %>">
+                                    </div>
+                                    <div class="p-4">
+                                        <h4 class="font-semibold text-lg text-gray-900 truncate">
+                                            <%= listing.title %>
+                                        </h4>
+                                        <div class="flex justify-between items-center mt-4">
+                                            <a href="/listings/<%= listing._id %>/edit"
+                                                class="text-sm font-medium text-gray-700 hover:text-primary">Edit</a>
+                                            <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE"
+                                                class="inline">
+                                                <button
+                                                    class="text-sm font-medium text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
+
+            <!-- Wishlist Tab -->
+            <div class="hidden" id="wishlist" role="tabpanel" aria-labelledby="wishlist-tab">
+                <% if(user.wishlist.length===0) { %>
+                    <div class="text-center py-12">
+                        <div class="text-gray-400 mb-4"><i class="fa-regular fa-heart text-4xl"></i></div>
+                        <h3 class="text-lg font-medium text-gray-900">Your wishlist is empty</h3>
+                        <p class="text-gray-500">Explore listings and save your favorites!</p>
+                        <a href="/listings" class="mt-4 inline-block text-primary font-medium hover:underline">Start
+                            Exploring</a>
+                    </div>
+                    <% } else { %>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            <% for(listing of user.wishlist) { %>
+                                <a href="/listings/<%= listing._id %>" class="group">
+                                    <div
+                                        class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-transparent hover:border-gray-200">
+                                        <div class="relative aspect-square overflow-hidden">
+                                            <img src="<%= listing.image %>"
+                                                class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                                alt="<%= listing.title %>">
+                                            <div
+                                                class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition duration-300">
+                                            </div>
+                                            <button
+                                                class="absolute top-3 right-3 z-20 text-red-500 transition transform hover:scale-110 active:scale-90"
+                                                onclick="removeFromWishlist(event, this, '<%= listing._id %>')">
+                                                <i class="fa-solid fa-heart text-2xl drop-shadow-md"></i>
+                                            </button>
+                                        </div>
+                                        <div class="p-4">
+                                            <h4 class="font-semibold text-lg text-gray-900 truncate">
+                                                <%= listing.title %>
+                                            </h4>
+                                            <p class="mt-1 text-gray-500 text-sm">
+                                                <span class="font-bold text-gray-900">&#8377; <%= listing.price ?
+                                                        listing.price.toLocaleString("en-IN") : "N/A" %></span> / night
+                                            </p>
+                                        </div>
+                                    </div>
+                                </a>
+                                <% } %>
+                        </div>
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple Tab Switcher Script
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabs = document.querySelectorAll('[role="tab"]');
+            const panels = document.querySelectorAll('[role="tabpanel"]');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Deactivate all
+                    tabs.forEach(t => {
+                        t.classList.remove('text-primary', 'border-primary');
+                        t.classList.add('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    panels.forEach(p => p.classList.add('hidden'));
+
+                    // Activate clicked
+                    tab.classList.add('text-primary', 'border-primary');
+                    tab.classList.remove('border-transparent', 'hover:text-gray-600', 'hover:border-gray-300');
+                    tab.setAttribute('aria-selected', 'true');
+
+                    const target = document.querySelector(tab.dataset.tabsTarget);
+                    target.classList.remove('hidden');
+                });
+            });
+        });
+    </script>

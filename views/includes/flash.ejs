@@ -1,0 +1,23 @@
+<% if(success && success.length) { %>
+    <div class="fixed top-20 right-5 z-50 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg flex items-center justify-between min-w-[300px]"
+        role="alert">
+        <span>
+            <%= success %>
+        </span>
+        <button onclick="this.parentElement.remove()" class="text-green-700 hover:text-green-900 ml-4">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+    </div>
+    <% } %>
+
+        <% if(error && error.length) { %>
+            <div class="fixed top-20 right-5 z-50 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded shadow-lg flex items-center justify-between min-w-[300px]"
+                role="alert">
+                <span>
+                    <%= error %>
+                </span>
+                <button onclick="this.parentElement.remove()" class="text-red-700 hover:text-red-900 ml-4">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <% } %>

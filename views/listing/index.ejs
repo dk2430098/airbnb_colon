@@ -1,29 +1,44 @@
 <% layout('/layouts/boilerplate') %>
-<body>
-    <h3>All Listings</h3>
-    <!-- <form action="/listings/new" method="GET">
-        <button>Create New Listing</button>
-    </form> -->
-    
-    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
-        <% for(listing of allListing) { %>
-            <a href="/listings/<%= listing._id %>" class="listing-list">
-                <div class="card col">
-                    <img src="<%= listing.image %>" 
-                    class="card-img-top" 
-                    alt="listing-image" 
-                    style="height: 20rem;">
-                    <div class="card-img-overlay"></div>
-                    <div class="card-body">
-                        <p class="card-text">
-                            <b><%= listing.title %></b> <br>
-                            &#8377; <%= listing.price ? listing.price.toLocaleString("en-IN") : "Price not available" %>
-                        </p>
+
+    <body>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <% for(listing of allListing) { %>
+                <a href="/listings/<%= listing._id %>" class="group">
+                    <div
+                        class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition duration-300 border border-transparent hover:border-gray-200">
+                        <div class="relative aspect-square overflow-hidden">
+                            <img src="<%= listing.image %>"
+                                class="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                                alt="<%= listing.title %>">
+                            <div
+                                class="absolute inset-0 bg-black/10 group-hover:bg-transparent transition duration-300">
+                            </div>
+                            <!-- Wishlist Logic -->
+                            <% let isLiked=false; if(currUser && currUser.wishlist && currUser.wishlist.some(id=>
+                                id.toString() === listing._id.toString())) {
+                                isLiked = true;
+                                }
+                                %>
+                                <button
+                                    class="absolute top-3 right-3 z-20 transition transform hover:scale-110 active:scale-90 <%= isLiked ? 'text-red-500' : 'text-white/70 hover:text-red-500' %>"
+                                    onclick="toggleLike(event, this, '<%= listing._id %>')">
+                                    <i
+                                        class="<%= isLiked ? 'fa-solid' : 'fa-regular' %> fa-heart text-2xl drop-shadow-md"></i>
+                                </button>
+                        </div>
+                        <div class="p-4">
+                            <h4 class="font-semibold text-lg text-gray-900 truncate">
+                                <%= listing.title %>
+                            </h4>
+                            <p class="mt-1 text-gray-500 text-sm">
+                                <span class="font-bold text-gray-900">&#8377; <%= listing.price ?
+                                        listing.price.toLocaleString("en-IN") : "Price not available" %></span> / night
+                            </p>
+                        </div>
                     </div>
-                </div>
-            </a>
-        <% } %>   
+                </a>
+                <% } %>
         </div>
-    </div>
-  
-</body>
+
+    </body>

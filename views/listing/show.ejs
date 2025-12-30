@@ -1,32 +1,99 @@
 <% layout('/layouts/boilerplate') %>
-<body>
-    <div class="row mt-3"></div>
-        <div class="col-8 offset-2">
-            <h3>Listing Details</h3>
-        </div>
-        <div class="card col-6 offset-3 show-card">
-            <img src="<%= listing.image %>" 
-            class="card-img-top show-img"
-            alt="image" />
-   
-        <div class="card-body">
-            <p class="card-text">
-                <b> <%= listing.title %></b> <br>
-                <%= listing.description %> <br>
-                &#8377; <%= listing.price.toLocaleString("en-IN") %> <br>
-                <%= listing.location %> <br>
-                <%= listing.country %>
-            </p>
-        </div>
-    </div>
-   
-    <div class="btns mb-3">
-        <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark col-1 offset-3 edit-btn">Edit</a>
 
-        <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
-            <button class="btn btn-dark offset-4">
-                Delete
-            </button>
-        </form>
-    </div>
-</body>
+    <body>
+        <div class="max-w-4xl mx-auto mt-8 px-4">
+            <div class="mb-6">
+                <h3 class="text-3xl font-bold text-gray-900">
+                    <%= listing.title %>
+                </h3>
+                <p class="text-gray-500 mt-2 flex items-center">
+                    <i class="fa-solid fa-location-dot mr-2 text-primary"></i>
+                    <%= listing.location %>, <%= listing.country %>
+                </p>
+            </div>
+
+            <div class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100">
+                <div class="aspect-video w-full relative">
+                    <img src="<%= listing.image %>" class="w-full h-full object-cover" alt="<%= listing.title %>" />
+
+                    <!-- Wishlist Logic -->
+                    <% let isLiked=false; if(currUser && currUser.wishlist && currUser.wishlist.some(id=> id.toString()
+                        === listing._id.toString())) {
+                        isLiked = true;
+                        }
+                        %>
+                        <button
+                            class="absolute top-4 right-4 z-20 p-3 rounded-full bg-white/80 hover:bg-white transition transform hover:scale-110 active:scale-90 shadow-md <%= isLiked ? 'text-red-500' : 'text-gray-500 hover:text-red-500' %>"
+                            onclick="toggleLike(event, this, '<%= listing._id %>')">
+                            <i class="<%= isLiked ? 'fa-solid' : 'fa-regular' %> fa-heart text-2xl"></i>
+                        </button>
+                </div>
+
+                <div class="p-8">
+                    <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+                        <!-- Description -->
+                        <div class="flex-1">
+                            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                                <%= listing.description %>
+                            </p>
+                            <hr class="border-gray-200 my-6">
+                            <div class="flex items-center space-x-4">
+                                <div
+                                    class="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-xl text-gray-500 uppercase">
+                                    <%= listing.owner ? listing.owner.username[0] : 'A' %>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Hosted by</p>
+                                    <p class="font-semibold text-gray-900">
+                                        <%= listing.owner ? listing.owner.username : 'Unknown Host' %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Booking / Actions Card -->
+                        <div class="w-full md:w-1/3 min-w-[300px]">
+                            <div class="border border-gray-200 rounded-xl p-6 shadow-md bg-white sticky top-24">
+                                <h4 class="text-2xl font-bold mb-4 text-gray-900">
+                                    &#8377; <%= listing.price.toLocaleString("en-IN") %> <span
+                                            class="text-base font-normal text-gray-500">/ night</span>
+                                </h4>
+
+                                <% if(currUser && listing.owner && !listing.owner._id.equals(currUser._id)) { %>
+                                    <form action="/listings/<%= listing._id %>/book" method="POST" class="mt-4">
+                                        <button
+                                            class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg transition duration-200 shadow-md transform active:scale-95">
+                                            Book Now
+                                        </button>
+                                    </form>
+                                    <% } %>
+
+                                        <% if(currUser && listing.owner && listing.owner._id.equals(currUser._id)) { %>
+                                            <div class="grid grid-cols-2 gap-4 mt-4">
+                                                <a href="/listings/<%= listing._id %>/edit"
+                                                    class="flex justify-center items-center bg-gray-900 hover:bg-black text-white py-2 px-4 rounded-lg font-medium transition">
+                                                    Edit
+                                                </a>
+
+                                                <form method="POST"
+                                                    action="/listings/<%= listing._id %>?_method=DELETE">
+                                                    <button
+                                                        class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-medium transition">
+                                                        Delete
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <% } %>
+
+                                                <% if(!currUser) { %>
+                                                    <a href="/login"
+                                                        class="block w-full text-center bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg transition mt-4">Login
+                                                        to Book</a>
+                                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>

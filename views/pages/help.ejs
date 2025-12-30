@@ -1,0 +1,38 @@
+<% layout('/layouts/boilerplate') %>
+
+    <div class="max-w-2xl mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-3xl font-bold text-gray-900">How can we help?</h1>
+            <p class="text-gray-500 mt-2">Send us a message and we'll get back to you.</p>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+            <form action="/help" method="POST" class="space-y-6">
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" id="name" name="contact[name]" required
+                        class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 bg-gray-50 text-gray-900 focus:ring-primary focus:border-primary transition"
+                        placeholder="Deepak Kumar">
+                </div>
+
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="contact[email]" required
+                        class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 bg-gray-50 text-gray-900 focus:ring-primary focus:border-primary transition"
+                        placeholder="you@example.com">
+                </div>
+
+                <div>
+                    <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                    <textarea id="message" name="contact[message]" rows="4" required
+                        class="mt-1 block w-full px-4 py-3 rounded-lg border-gray-300 bg-gray-50 text-gray-900 focus:ring-primary focus:border-primary transition"
+                        placeholder="Tell us what you need help with..."></textarea>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg shadow-md transition transform active:scale-95">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>

@@ -1,45 +1,55 @@
 <% layout('/layouts/boilerplate') %>
-<body>
-    <br><br>
-   <div class="row">
-    <div class="col-8 offset-2">
-        <h3>Create a New Listing</h3>
-        <form action="/listings" method="POST">
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title" class="form-control" required />
+
+    <body>
+        <div class="max-w-2xl mx-auto mt-10 mb-20">
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <h3 class="text-2xl font-bold mb-6 text-gray-800">Create a New Listing</h3>
+                <form action="/listings" method="POST" class="space-y-6">
+                    <div>
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+                        <input type="text" name="listing[title]" placeholder="Add a catchy title" id="title"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                            required />
+                    </div>
+
+                    <div>
+                        <label for="description"
+                            class="block text-sm font-medium text-gray-700 mb-1">Description</label>
+                        <textarea name="listing[description]" id="description" rows="4"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-1">Image Link</label>
+                        <input type="text" name="listing[image]" id="image" placeholder="Enter image URL"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label for="price" class="block text-sm font-medium text-gray-700 mb-1">Price</label>
+                            <input type="number" name="listing[price]" placeholder="1200" id="price"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition"
+                                required />
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Country</label>
+                            <input type="text" name="listing[country]" placeholder="India" id="country"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location</label>
+                        <input type="text" name="listing[location]" placeholder="Jaipur, Rajasthan" id="location"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition">
+                    </div>
+
+                    <button
+                        class="w-full bg-primary hover:bg-primary-hover text-white font-bold py-3 px-6 rounded-lg transition duration-200 shadow-md">Create
+                        Listing</button>
+                </form>
             </div>
-           
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea name="listing[description]" id="description" class="form-control"></textarea>
-            </div>
-           
-            <div class="mb-3">
-                <label for="image" class="form-label">Image Link</label>
-                <input type="text" name="listing[image]" placeholder="enter image url/link" id="image" class="form-control">
-            </div>
-            
-            <div class="row mb-3">
-                <div class="col-4">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number" name="listing[price]" placeholder="1200" id="price" class="form-control" required />
-                </div>
-                
-                <div class="col-8">
-                    <label for="country" class="form-label">Country</label>
-                    <input type="text" name="listing[country]" placeholder="India" id="country" class="form-control">
-                </div>
-            </div>
-            
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" name="listing[location]" placeholder="Jaipur, Rajasthan" id="location" class="form-control">
-            </div>
-            <br><br>
-            <button class="btn btn-dark add-btn">Add</button>
-        </form>
-    <br><br>
-    </div>
-   </div>
-</body>
+        </div>
+    </body>
